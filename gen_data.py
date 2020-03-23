@@ -19,7 +19,6 @@ def main():
     s.listen(5)
     while True:
         c, addr = s.accept()
-        print("Connected")
         start_new_thread(threaded, (c,))
 
 if __name__ == '__main__':
