@@ -87,7 +87,7 @@ def protected():
             global cookie_numb
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            client.connect(('0.0.0.0', 42180))
+            client.connect(('', 42180))
             random_string = client.recv(1024)
             rand_list.append(random_string)
             cookie_numb = int(cookie_numb)
