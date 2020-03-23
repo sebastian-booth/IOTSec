@@ -1,5 +1,3 @@
-#test
-
 import random
 import string
 import socket
