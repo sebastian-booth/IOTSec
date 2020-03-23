@@ -11,6 +11,7 @@ def threaded(c):
         random_string = ''.join(random.choice(letters) for i in range(16))
         converted = random_string.encode()
         print(converted)
+        time.sleep(0.5)
         c.send(converted)
 
 def main():
