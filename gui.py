@@ -89,7 +89,7 @@ def protected():
             client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             client.connect(("localhost", 42180))
             random_string = client.recv(1024)
-            random_string.decode("utf-8")
+            random_string = random_string.decode("utf-8")
             rand_list.append(random_string)
             cookie_numb = int(cookie_numb)
             cookie_numb += 1
