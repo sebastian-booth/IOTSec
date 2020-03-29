@@ -1,16 +1,13 @@
 # data gen code from https://stackoverflow.com/a/15042327
 # Login code from https://github.com/maxcountryman/flask-login
+# Encryption code from https://pypi.org/project/pycrypto/
 
 import flask
 from flask import make_response
 from flask import jsonify
-from flask import session
-from flask import redirect
-from flask import url_for
-import time
-import test
-import random
-import string
+from flask import render_template_string
+from flask import request
+from Crypto.Cipher import AES
 import flask_login
 import socket
 
@@ -84,19 +81,24 @@ def login():
 @app.route('/protected')
 @flask_login.login_required
 def protected():
+            key = b'0123456789abcdef'
+            iv = b'0123456789abcdef'
             global cookie_numb
+            obj2 = AES.new(key,AES.MODE_CBC, iv=iv) # change key and iv at some point
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            client.connect(("localhost", 42180))
-            random_string = client.recv(1024)
-            random_string = random_string.decode("utf-8")
-            rand_list.append(random_string)
+            client.connect(("localhost", 42186))
+            random_word_encrypt = client.recv(1024)
+            random_word = obj2.decrypt(random_word_encrypt)
+            random_word = random_word[0: len(random_word)//16]
+            random_word = random_word.decode('utf-8')
+            rand_list.append(random_word)
             cookie_numb = int(cookie_numb)
             cookie_numb += 1
             cookie_numb = str(cookie_numb)
             cookie_name = "Cookie" + cookie_numb
             resp = make_response(jsonify(rand_list))
-            resp.set_cookie(cookie_name,random_string)
+            resp.set_cookie(cookie_name,random_word_encrypt)
             return resp  # text/html is required for most browsers to show the partial page immediately
 
 @app.route('/del-cookies')
