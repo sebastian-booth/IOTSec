@@ -29,6 +29,7 @@ def threaded(c):
 
 def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind(('', 42186))
     s.listen(5)
     while True:
