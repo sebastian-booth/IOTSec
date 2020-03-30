@@ -8,6 +8,10 @@ from Crypto.Cipher import AES
 
 # Adapted from https://www.geeksforgeeks.org/socket-programming-multi-threading-python/
 # Crypto code from https://pypi.org/project/pycrypto/
+
+# TODO
+# Pretty much done
+
 def threaded(c):
     key = b'0123456789abcdef'
     iv = b'0123456789abcdef'

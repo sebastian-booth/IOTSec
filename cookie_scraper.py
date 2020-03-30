@@ -3,6 +3,8 @@ import random
 import requests
 import os
 
+# Needs reworking
+
 def main():
     payload = {'username':'sbooth_csc','password':'pass'}
     with requests.Session() as s:

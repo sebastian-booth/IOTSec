@@ -2,6 +2,10 @@
 # Login code from https://github.com/maxcountryman/flask-login
 # Encryption code from https://pypi.org/project/pycrypto/
 
+# TODO:
+# Client server ip connect input
+# Pretty much done
+
 import flask
 from flask import make_response
 from flask import jsonify
