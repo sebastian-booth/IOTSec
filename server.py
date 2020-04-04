@@ -28,7 +28,7 @@ def threaded(c):
         random_word_bytes = str.encode(random_word)
         random_word_encrypt = obj.encrypt(random_word_bytes*16)
         print(random_word_encrypt)
-        time.sleep(0.5)
+        time.sleep(1)
         c.send(random_word_encrypt)
 
 def main():
