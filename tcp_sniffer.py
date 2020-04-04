@@ -19,18 +19,23 @@ def main():
         except StopIteration:
             break
         try:
-            stream_data = p.data.data.binary_value
-            print (stream_data)
+            stream_data = p.data.data
+            stream_data = bytes.fromhex(stream_data).decode('ascii', 'ignore')
+            #print (stream_data)
+            results = zxcvbn(stream_data)
+            #print(results)
+            word = results['password']
+            word = word.replace('/', '//')
+            score = results['score']
+            print("word:", word)
+            print("score:", score)
+            if score != 4:
+                print("Low string entropy: Its likely traffic is not encrypted")
+                print("\n")
+            else:
+                print("High string entropy: Traffic is likely encrypted")
+                print("\n")
         except AttributeError:
             pass
-    results = zxcvbn(stream_data)
-    print(results)
-    word = results['password']
-    score = results['score']
-    print("word:", word)
-    print("score:", score)
-    if word != 4:
-        print("Low string entropy: Its likely traffic is not encrypted")
-
 
 main()

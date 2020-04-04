@@ -3,7 +3,6 @@
 # Encryption code from https://pypi.org/project/pycrypto/
 
 # TODO:
-# Client server ip connect input
 # Pretty much done
 
 import flask
@@ -91,7 +90,7 @@ def protected():
             obj2 = AES.new(key,AES.MODE_CBC, iv=iv) # change key and iv at some point
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            client.connect(("localhost", 42186))
+            client.connect(("192.168.1.146", 42186)) # IP and port of IOT devices usually hard coded into gui app
             random_word_encrypt = client.recv(1024)
             random_word = obj2.decrypt(random_word_encrypt)
             random_word = random_word[0: len(random_word)//16]
