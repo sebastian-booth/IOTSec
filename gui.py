@@ -101,7 +101,7 @@ def protected():
             cookie_numb = str(cookie_numb)
             cookie_name = "Cookie" + cookie_numb
             resp = make_response(jsonify(rand_list))
-            resp.set_cookie(cookie_name,random_word_encrypt)
+            resp.set_cookie(cookie_name,random_word)
             return resp  # text/html is required for most browsers to show the partial page immediately
 
 @app.route('/del-cookies')
