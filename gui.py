@@ -6,10 +6,8 @@
 # Pretty much done
 
 import flask
-from flask import make_response
-from flask import jsonify
-from flask import render_template_string
-from flask import request
+from flask import *
+import db
 from Crypto.Cipher import AES
 import flask_login
 import socket
@@ -118,5 +116,17 @@ def logout():
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     return 'Unauthorized'
+
+@app.route('/feedback', methods=['POST', 'GET']) # Code from https://github.com/bgres/xss-demo/blob/master/app.py
+def index():                                    # A 'feedback' page is unlikely to appear on a IOT platform
+    if request.method == 'POST':                # But I needed somewhere to utilise a XSS vulnerability
+        db.add_comment(request.form['comment'])
+
+    search_query = request.args.get('q')
+
+    comments = db.get_comments(search_query)
+
+    return render_template('index.html',comments=comments,search_query=search_query)
+
 
 app.run(debug=True)

@@ -1,0 +1,49 @@
+<!-- code from https://github.com/bgres/xss-demo/blob/master/app.py -->
+
+<!DOCTYPE html>
+{% autoescape false %} <!-- In a normal production environment this would never be set to false but is default to true in jinja/flask-->
+<html>                 <!-- But to demonstrate the XSS scanner, cookie scraper and session hijacker -->
+  <head>               <!-- It must be disabled, However other web deployment platforms may not come with an autoescape feature -->
+    <meta charset="utf-8">
+    <title>XSS Demo</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+
+  <body>
+
+    <!-- Header -->
+    <header>
+      <h1>XSS Demo</h1>
+      <p>Read, search and post comments</p>
+    </header>
+
+    <!-- Search form -->
+    <form method="GET">
+      <input type="text" name="q" 
+             placeholder="Search query" autocomplete="off" />
+      <input type="submit" value="Filter comments" />
+    </form>
+
+    <!-- Comments -->
+    {% if not search_query %}
+      <h3>Showing all comments:</h3>
+    {% else %}
+      <h3>Showing comments containing "{{ search_query }}":</h3>
+    {% endif %}
+
+    {% for comment in comments %}
+      <div>
+        <p>{{ comment }}</p>
+      </div>
+    {% endfor %}
+
+    <!-- Write form -->
+    <form action="/feedback" method="POST">
+      <input type="text" name="comment" 
+             placeholder="Comment" autocomplete="off" />
+      <input type="submit" value="Submit new comment" />
+    </form>
+
+  </body>
+</html>
+{% endautoescape %}
