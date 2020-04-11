@@ -16,6 +16,8 @@ app = flask.Flask(__name__)
 
 app.secret_key = 'dv7XzvYUOigmX32oOBL5cbEAzylQOtFJf/4Nk0fVKZY'
 
+app.url_map.strict_slashes = False
+
 login_manager = flask_login.LoginManager()
 
 login_manager.init_app(app)

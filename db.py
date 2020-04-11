@@ -1,4 +1,4 @@
-# code from https://github.com/bgres/xss-demo/blob/master/app.py
+# code from https://github.com/bgres/xss-demo
 
 import sqlite3
 

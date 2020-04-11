@@ -1,4 +1,6 @@
 @charset "UTF-8";
+/* code from https://github.com/bgres/xss-demo */
+
 
 body {
     background-color: #fff;
