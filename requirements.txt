@@ -3,3 +3,5 @@ flask_login
 pyshark
 zxcvbn
 pycryptodome
+requests_html
+beautifulsoup4
