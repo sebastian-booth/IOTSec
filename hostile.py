@@ -3,7 +3,7 @@ from flask import *
 
 app = flask.Flask(__name__)
 
-app.secret_key = 'adsjqjwoaskldn091jijdflkweo'
+app.secret_key = 'ypes79X32BVb1TyMA0qkHxYddzpVz4qrzJLFgs3zHL8'
 
 app.url_map.strict_slashes = False
 

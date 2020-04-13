@@ -15,7 +15,7 @@ import socket
 app = flask.Flask(__name__)
 app.config['SESSION_COOKIE_HTTPONLY'] = False # VERY unlikely you will see httponly purposefully being set to false
                                                 # from default flask true but some bespoke production platforms
-app.secret_key = 'dv7XzvYUOigmX32oOBL5cbEAzylQOtFJf/4Nk0fVKZY' # may not have manually set the session cookie to be httponly
+app.secret_key = '6D4FQsRvlY4L0pzoHXf5wulKPoWPG3Cxz_yHpNU9er8' # may not have manually set the session cookie to be httponly
 
 app.url_map.strict_slashes = False
 
