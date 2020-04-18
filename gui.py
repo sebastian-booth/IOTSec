@@ -82,7 +82,7 @@ def login():
 
     return 'Incorrect login'
 
-@app.route('/protected')
+@app.route('/protected', methods=['POST','GET'])
 @flask_login.login_required
 def protected():
             key = b'0123456789abcdef'
@@ -91,7 +91,7 @@ def protected():
             obj2 = AES.new(key,AES.MODE_CBC, iv=iv) # change key and iv at some point
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            client.connect(("192.168.1.146", 42186)) # IP and port of IOT devices usually hard coded into gui app
+            client.connect(("localhost", 42186)) # 192.168.1.146 IP and port of IOT devices usually hard coded into gui app
             random_word_encrypt = client.recv(1024)
             random_word = obj2.decrypt(random_word_encrypt)
             random_word = random_word[0: len(random_word)//16]
