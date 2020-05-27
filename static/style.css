@@ -1,6 +1,7 @@
 @charset "UTF-8";
-/* code from https://github.com/bgres/xss-demo */
+/* all code from [1]
 
+/* Set section styling variables */
 
 body {
     background-color: #fff;

@@ -1,41 +1,43 @@
 import pyshark  # http://kiminewt.github.io/pyshark/
-import json
-import random
-from zxcvbn import zxcvbn
-
-# change interface and src ip as needed
-
-# TODO:
-# Input for interface and ip source display filter
-# link up entropy checker (zxcvbn)(remove last 16 bytes?)
+from zxcvbn import zxcvbn # https://github.com/dropbox/zxcvbn
+import ipaddress # Standard Python Library
 
 def main():
-    capture = pyshark.LiveCapture(interface='\Device\\NPF_{2F1DBFFB-5D87-4B88-BA83-CF0104043E2E}',display_filter='ip.src == 192.168.1.146')
-    capture.sniff(timeout=10)
-    print (capture)
+    flag = 1 # Set flag
+    intf = input("Enter interface name to sniff (ie eth0, enp0s3) from ifconfig/ipconfig:  ") # Interface input
+    while flag == 1: # loop check
+        filter = input("Enter IP to sniff or 127.0.0.1 for local device: ") # filter Ip input
+        try:
+            ipaddress.ip_address(filter)  # if valid
+            flag = 0  # end while loop
+        except:
+            print("Invalid IP")  # else repeat
+    capture = pyshark.LiveCapture(interface=intf,display_filter='ip.src =='+filter) # start pyshark capture with interface input and ip source input into variable capture
+    capture.sniff(timeout=10) # sniff for 10 seconds
+    print (capture) # print capture
     while True:
         try:
-            p = capture.next()
-        except StopIteration:
+            p = capture.next() # Iterate through capture packets
+        except StopIteration: # when at last packet, end
             break
         try:
-            stream_data = p.data.data
-            stream_data = bytes.fromhex(stream_data).decode('ascii', 'ignore')
+            stream_data = p.data.data # Extract data from last packet
+            stream_data = bytes.fromhex(stream_data).decode('ascii', 'ignore') # decode hex data into ascii
             #print (stream_data)
-            results = zxcvbn(stream_data)
+            results = zxcvbn(stream_data) # generate string entropy using zxcvbn into varaible results
             #print(results)
-            word = results['password']
+            word = results['password'] # Extract word from zxcvbn
             word = word.replace('/', '//')
-            score = results['score']
-            print("word:", word)
-            print("score:", score)
-            if score != 4:
+            score = results['score'] # Extract score from zxcvbn
+            print("word:", word) # print word
+            print("score:", score) # print score
+            if score != 4: # If score not 4 then string likely not encrypted
                 print("Low string entropy: Its likely traffic is not encrypted")
                 print("\n")
-            else:
+            else: # If score is 4 string is likely encrypted
                 print("High string entropy: Traffic is likely encrypted")
                 print("\n")
-        except AttributeError:
+        except AttributeError: # Catch attribute error
             pass
 
 main()
