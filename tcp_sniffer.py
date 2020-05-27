@@ -4,7 +4,7 @@ import ipaddress # Standard Python Library
 
 def main():
     flag = 1 # Set flag
-    intf = input("Enter interface name to sniff (ie eth0, enp0s3) from ifconfig/ipconfig:  ") # Interface input
+    intf = input("Enter interface name to sniff (ie eth0, enp0s3) (lo if local) from ifconfig/ipconfig:  ") # Interface input
     while flag == 1: # loop check
         filter = input("Enter IP to sniff or 127.0.0.1 for local device: ") # filter Ip input
         try:

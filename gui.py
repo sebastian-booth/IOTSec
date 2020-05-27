@@ -10,7 +10,7 @@ flag = 1
 
 print("Retrieve primary IP of server by entering ""ifconfig"" (Linux - Terminal) or ""ipconfig"" (Windows - CMD)") # Not ideal as usage becomes less user friendly
 while flag == 1:
-    server_ip = input("Enter server IP or 127.0.0.1 for local device: ") # Get server ip
+    server_ip = input("Enter server IP: ") # Get server ip
     try:
         ipaddress.ip_address(server_ip) # if valid
         flag = 0 # end while loop
@@ -90,7 +90,7 @@ def login():
 
 # [/4]
 
-@app.route('/protected') # define protected page
+@app.route('/protected', methods=['GET', 'POST']) # define protected page
 @flask_login.login_required # Only accessible via login session
 def protected():
             key = b'0123456789abcdef' # define encryption key (must be same as server key)
