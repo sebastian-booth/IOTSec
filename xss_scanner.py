@@ -23,5 +23,7 @@ def main():
     print(title)
     if title == "XSS Vulnerable": # If title is as set in the payload display message
         print("The scanned page is vulnerable to XSS")
+    else:
+        print("The scanned page is not vulnerable to XSS")
 
 main()
